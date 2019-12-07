@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200px" height="701px" viewBox="0 0 1200 701" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>course</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(0.000000, 1.000000)">
+            <g id="course">
+                <polygon id="outerCourse" points="888.5 612.5 476.5 612.5 274.5 601.5 128 493 79 366.5 79 194 204.5 84 343 134 540 38.5 722.5 19 875 38.5 957.5 101.5 976.5 185 875 257.5 835.5 294 824 366.5 1040.5 325.5 1097.5 349.5 1146 469 1097.5 567"></polygon>
+                <polygon id="innerCourse" points="508.5 508 847 508 981 488.5 953 430.5 762 458 675 418 631.5 269.5 770.5 184 715 133 364.5 269.5 213.5 231 213.5 430.5 283 471"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
