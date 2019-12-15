@@ -47,11 +47,17 @@ func intersection(l1, l2 line) (float64, float64, bool) {
 }
 
 func carBoundings(x, y, w, h, angle float64) []line {
-	top := newRay(x, y, w, float64(int(angle)%360)*2*math.Pi/360)
-	left := newRay(x, y, h, float64(int(angle+90)%360)*2*math.Pi/360)
-	right := newRay(top.X2, top.Y2, h, float64(int(angle+90)%360)*2*math.Pi/360)
-	bottom := newRay(left.X2, left.Y2, w, float64(int(angle)%360)*2*math.Pi/360)
 
-	return []line{top, left, right, bottom}
+	top := newRay(x, y, math.Sqrt(math.Pow(h/2, 2)+math.Pow(w/2, 2)), angle-60*math.Pi/180)
+
+	bot := newRay(x, y, math.Sqrt(math.Pow(h/2, 2)+math.Pow(w/2, 2)), angle-120*math.Pi/180)
+
+	left := newRay(x, y, math.Sqrt(math.Pow(h/2, 2)+math.Pow(w/2, 2)), angle+60*math.Pi/180)
+	right := newRay(x, y, math.Sqrt(math.Pow(h/2, 2)+math.Pow(w/2, 2)), angle+120*math.Pi/180)
+	//left := newRay(x, y, h, angle)
+	//right := newRay(top.X2, top.Y2, h, angle)
+	//bottom := newRay(left.X2, left.Y2, w, angle)
+
+	return []line{top, bot, left, right}
 
 }

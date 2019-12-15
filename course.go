@@ -21,17 +21,18 @@ type Course struct {
 }
 
 // NewCourse constructor for Course returns *Course
-func NewCourse(sections int, courseSections []line, filePath string) *Course {
+func NewCourse(sectionsFilePath, filePath string) *Course {
+	sections := sectionsFromSVG(sectionsFilePath)
 
 	c := &Course{
-		walls:           []line{},               // to check for collisons
-		courseSections:  courseSections,         // sections line check for collisons
-		lapTimes:        []time.Duration{},      // Leaderboard
-		sections:        sections,               // count of section
-		sectionsCounter: make([]bool, sections), // check all section have passed No cheating :D
+		walls:           []line{},                    // to check for collisons
+		courseSections:  sections,                    // sections line check for collisons
+		lapTimes:        []time.Duration{},           // Leaderboard
+		sections:        len(sections),               // count of section
+		sectionsCounter: make([]bool, len(sections)), // check all section have passed No cheating :D
 	}
 
-	c.initWithSVG(filePath) //init walls with SVG
+	c.initWithSVG(filePath)
 	return c
 }
 
@@ -56,13 +57,17 @@ func (c *Course) finish(lapTime time.Duration) bool {
 }
 
 // section passed
-func (c *Course) sectionCleared(section int) {
-	c.sectionsCounter[section] = true
-
+func (c *Course) sectionCleared(section int) bool {
 	if section == 0 {
 		c.startTime = time.Now()
 	}
 
+	if c.sectionsCounter[section] == false {
+		c.sectionsCounter[section] = true
+		return true
+	}
+
+	return false
 }
 
 // getLapTime returns the time since Lap start
@@ -107,6 +112,30 @@ func (c *Course) initWithSVG(filePath string) {
 		}
 	}
 	c.walls = append(c.walls, lines...)
+}
+
+func sectionsFromSVG(filePath string) []line {
+	var lines []line
+	file, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, v := range strings.Split(string(file), "\n") {
+		if strings.Contains(v, "line") {
+			lineStr := strings.TrimLeft(strings.TrimRight(v, "></line>"), "<line ")
+			points := strings.Split(lineStr, " ")
+			pointBuff := make([]float64, 4)
+			for i, v := range points {
+				if strings.Contains(v, "x") || strings.Contains(v, "y") {
+					pointBuff[i], _ = strconv.ParseFloat(strings.TrimLeft(strings.TrimRight(v[4:], "\""), "\""), 64)
+
+				}
+			}
+			lines = append(lines, line{pointBuff[0], pointBuff[1], pointBuff[2], pointBuff[3]})
+		}
+	}
+	return lines
 }
 
 // getPointsForLine helper for initWithSVG()

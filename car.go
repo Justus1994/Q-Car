@@ -23,15 +23,15 @@ func NewCar(x, y, angle, w, h float64) *Car {
 		height:     h,
 		angle:      angle,
 		angularVel: 0,
-		power:      0.5,
-		turn:       0.3,
-		drag:       0.9,
-		angDrag:    0.9,
+		power:      0.17,
+		turn:       1.3,
+		drag:       0.95,
+		angDrag:    0.5,
 		vel:        vec{0, 0}}
 }
 
-func (c *Car) drawAngle() float64 {
-	return float64(int(c.angle)%360) * 2 * math.Pi / 360
+func (c *Car) rad() float64 {
+	return c.angle * math.Pi / 180
 }
 
 func (c *Car) acc() {
@@ -58,4 +58,5 @@ func (c *Car) update() {
 	c.vel.y *= c.drag
 	c.angle += c.angularVel
 	c.angularVel *= c.angDrag
+
 }
